@@ -16,10 +16,42 @@ const Settings = () => {
     lpgPrice: 0,
     cngPrice: 0,
     // Reward Calculation
-    rewardFormula: 'amount / 100', // Points per ₹100
     rewardMultiplier: 1,
+    pointsPerLiter: 1, // Points per liter
   })
   const [loading, setLoading] = useState(false)
+  const [loadingSettings, setLoadingSettings] = useState(true)
+
+  // Load settings from backend on mount
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const response = await axios.get('/api/admin/settings')
+        if (response.data.success && response.data.data) {
+          const data = response.data.data
+          // Filter out rewardFormula if it exists (legacy field)
+          const { rewardFormula, ...cleanData } = data
+          setSettings({
+            stationName: cleanData.stationName || 'Fuel Station',
+            address: cleanData.address || '',
+            phone: cleanData.phone || '',
+            email: cleanData.email || '',
+            petrolPrice: cleanData.petrolPrice || 0,
+            dieselPrice: cleanData.dieselPrice || 0,
+            lpgPrice: cleanData.lpgPrice || 0,
+            cngPrice: cleanData.cngPrice || 0,
+            rewardMultiplier: cleanData.rewardMultiplier || 1,
+            pointsPerLiter: cleanData.pointsPerLiter || 1,
+          })
+        }
+      } catch (error) {
+        console.error('Error fetching settings:', error)
+      } finally {
+        setLoadingSettings(false)
+      }
+    }
+    fetchSettings()
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -34,6 +66,14 @@ const Settings = () => {
     } finally {
       setLoading(false)
     }
+  }
+
+  if (loadingSettings) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <p className="text-gray-600">Loading settings...</p>
+      </div>
+    )
   }
 
   return (
@@ -179,16 +219,17 @@ const Settings = () => {
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Reward Formula
+                Points Per Liter
               </label>
               <input
-                type="text"
-                value={settings.rewardFormula}
-                onChange={(e) => setSettings({ ...settings, rewardFormula: e.target.value })}
-                placeholder="e.g., amount / 100"
+                type="number"
+                step="0.1"
+                min="0"
+                value={settings.pointsPerLiter}
+                onChange={(e) => setSettings({ ...settings, pointsPerLiter: parseFloat(e.target.value) || 1 })}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <p className="text-xs text-gray-500 mt-1">Formula to calculate reward points (e.g., amount / 100 = 1 point per ₹100)</p>
+              <p className="text-xs text-gray-500 mt-1">Number of points awarded per liter of fuel purchased (e.g., 1 point per liter)</p>
             </div>
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -202,7 +243,7 @@ const Settings = () => {
                 onChange={(e) => setSettings({ ...settings, rewardMultiplier: parseFloat(e.target.value) || 1 })}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <p className="text-xs text-gray-500 mt-1">Multiplier for reward points calculation</p>
+              <p className="text-xs text-gray-500 mt-1">Multiplier applied to reward points calculation (e.g., 1.5 = 50% bonus points)</p>
             </div>
           </div>
         </div>
