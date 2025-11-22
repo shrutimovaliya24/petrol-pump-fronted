@@ -241,99 +241,101 @@ const PumpManagement = () => {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-2 sm:space-y-3 md:space-y-4 lg:space-y-6">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3 md:gap-0">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Pump Management</h1>
-          <p className="text-gray-600 mt-1">Monitor and manage fuel pumps</p>
+          <h1 className="text-display">Pump Management</h1>
+          <p className="text-caption mt-0.5 sm:mt-1">Monitor and manage fuel pumps</p>
         </div>
         <button
           onClick={() => {
             resetForm()
             setShowModal(true)
           }}
-          className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-all"
+          className="btn-primary flex items-center gap-1.5 w-full sm:w-auto"
         >
-          + Add New Pump
+          <span className="text-base sm:text-lg">+</span>
+          <span className="hidden sm:inline">Add New Pump</span>
+          <span className="sm:hidden">Add Pump</span>
         </button>
       </div>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="bg-white rounded-lg shadow-md p-6">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3 md:gap-4 lg:gap-6">
+        <div className="stat-card">
           <div className="flex items-center justify-between">
-            <div>
-              <p className="text-gray-600 text-sm font-medium mb-1">Total Pumps</p>
-              <p className="text-3xl font-bold text-gray-900">{stats.totalPumps}</p>
-              <p className="text-green-600 text-xs mt-1">Active pumps</p>
+            <div className="min-w-0 flex-1">
+              <p className="text-caption mb-0.5">Total Pumps</p>
+              <p className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">{stats.totalPumps}</p>
+              <p className="text-primary-600 text-[10px] sm:text-xs mt-0.5">Active pumps</p>
             </div>
-            <div className="bg-green-100 p-3 rounded-lg">
-              <span className="text-2xl">⛽</span>
+            <div className="bg-primary-100 p-1.5 sm:p-2 md:p-3 rounded-lg flex-shrink-0">
+              <span className="text-base sm:text-lg md:text-xl lg:text-2xl">⛽</span>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="stat-card">
           <div className="flex items-center justify-between">
-            <div>
-              <p className="text-gray-600 text-sm font-medium mb-1">Active Pumps</p>
-              <p className="text-3xl font-bold text-gray-900">{stats.activePumps}</p>
-              <p className="text-blue-600 text-xs mt-1">Running now</p>
+            <div className="min-w-0 flex-1">
+              <p className="text-caption mb-0.5">Active Pumps</p>
+              <p className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">{stats.activePumps}</p>
+              <p className="text-primary-600 text-[10px] sm:text-xs mt-0.5">Running now</p>
             </div>
-            <div className="bg-blue-100 p-3 rounded-lg">
-              <span className="text-2xl">✓</span>
+            <div className="bg-primary-100 p-1.5 sm:p-2 md:p-3 rounded-lg flex-shrink-0">
+              <span className="text-base sm:text-lg md:text-xl lg:text-2xl">✓</span>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="stat-card">
           <div className="flex items-center justify-between">
-            <div>
-              <p className="text-gray-600 text-sm font-medium mb-1">Gift Items</p>
-              <p className="text-3xl font-bold text-gray-900">{stats.totalGifts}</p>
-              <p className="text-orange-600 text-xs mt-1">Gifts available</p>
+            <div className="min-w-0 flex-1">
+              <p className="text-caption mb-0.5">Gift Items</p>
+              <p className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">{stats.totalGifts}</p>
+              <p className="text-primary-600 text-[10px] sm:text-xs mt-0.5">Gifts available</p>
             </div>
-            <div className="bg-yellow-100 p-3 rounded-lg">
-              <span className="text-2xl">🎁</span>
+            <div className="bg-primary-100 p-1.5 sm:p-2 md:p-3 rounded-lg flex-shrink-0">
+              <span className="text-base sm:text-lg md:text-xl lg:text-2xl">🎁</span>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="stat-card">
           <div className="flex items-center justify-between">
-            <div>
-              <p className="text-gray-600 text-sm font-medium mb-1">Customers</p>
-              <p className="text-3xl font-bold text-gray-900">{stats.totalCustomers}</p>
-              <p className="text-green-600 text-xs mt-1">Active customers</p>
+            <div className="min-w-0 flex-1">
+              <p className="text-caption mb-0.5">Customers</p>
+              <p className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">{stats.totalCustomers}</p>
+              <p className="text-primary-600 text-[10px] sm:text-xs mt-0.5">Active customers</p>
             </div>
-            <div className="bg-purple-100 p-3 rounded-lg">
-              <span className="text-2xl">👥</span>
+            <div className="bg-primary-100 p-1.5 sm:p-2 md:p-3 rounded-lg flex-shrink-0">
+              <span className="text-base sm:text-lg md:text-xl lg:text-2xl">👥</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* All Pumps */}
-      <div className="bg-white rounded-xl shadow-md p-6">
-        <h2 className="text-xl font-bold text-gray-900 mb-4">All Pumps</h2>
+      <div className="card p-3 sm:p-4 md:p-5 lg:p-6">
+        <h2 className="text-heading mb-2 sm:mb-3 md:mb-4">All Pumps</h2>
         {loading ? (
-          <div className="text-center py-12">Loading...</div>
+          <div className="text-center py-6 sm:py-8 md:py-12 text-caption">Loading...</div>
         ) : pumps.length === 0 ? (
-          <p className="text-gray-500 text-center py-8">No pumps found. Add your first pump to get started.</p>
+          <p className="text-body text-center py-4 sm:py-6 md:py-8">No pumps found. Add your first pump to get started.</p>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-2 sm:space-y-3 md:space-y-4">
             {pumps.map((pump) => (
-              <div key={pump._id} className="border border-gray-200 rounded-lg p-4">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
-                      <span className="text-lg font-semibold text-gray-600">{pump.name.split('_')[1] || '1'}</span>
+              <div key={pump._id} className="border border-gray-100 rounded-lg p-2 sm:p-3 md:p-4">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3 md:gap-4 mb-2 sm:mb-3 md:mb-4">
+                  <div className="flex items-center gap-2 sm:gap-3 md:gap-4 min-w-0 flex-1">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <span className="text-xs sm:text-sm md:text-base font-semibold text-gray-600">{pump.name.split('_')[1] || '1'}</span>
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900">{pump.name}</h3>
-                      <p className="text-sm text-gray-600">{pump.fuelTypes?.join(', ') || 'N/A'}</p>
+                    <div className="min-w-0 flex-1">
+                      <h3 className="text-sm sm:text-base font-semibold text-gray-900 truncate">{pump.name}</h3>
+                      <p className="text-xs sm:text-sm text-gray-600 truncate">{pump.fuelTypes?.join(', ') || 'N/A'}</p>
                       {pump.supervisor && (
-                        <div className="mt-2 text-sm text-gray-600">
+                        <div className="mt-1 sm:mt-2 text-xs sm:text-sm text-gray-600 truncate">
                           <span>Supervisor: {
                             typeof pump.supervisor === 'object' 
                               ? pump.supervisor.email || pump.supervisor.name || 'N/A'
@@ -343,41 +345,43 @@ const PumpManagement = () => {
                       )}
                     </div>
                   </div>
-                  <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                    pump.status === 'ACTIVE' ? 'bg-green-100 text-green-800' : 
-                    pump.status === 'MAINTENANCE' ? 'bg-yellow-100 text-yellow-800' : 
-                    'bg-gray-100 text-gray-800'
+                  <span className={`px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold flex-shrink-0 ${
+                    pump.status === 'ACTIVE' ? 'bg-primary-100 text-primary-700' : 
+                    pump.status === 'MAINTENANCE' ? 'bg-yellow-100 text-yellow-700' : 
+                    'bg-gray-100 text-gray-700'
                   }`}>
                     {pump.status}
                   </span>
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {getAssignedEmployer(pump._id) && (
-                    <div className="px-3 py-1 bg-green-100 text-green-800 rounded-lg text-xs font-semibold">
-                      Assigned to: {getAssignedEmployer(pump._id)?.email || 'N/A'}
+                    <div className="px-2 py-1 sm:px-3 sm:py-1 bg-primary-100 text-primary-700 rounded-lg text-[10px] sm:text-xs font-semibold">
+                      Assigned to: <span className="truncate max-w-[120px] sm:max-w-none inline-block">{getAssignedEmployer(pump._id)?.email || 'N/A'}</span>
                     </div>
                   )}
                   <button
                     onClick={() => handleAssignPump(pump)}
-                    className="px-4 py-2 bg-purple-600 text-white rounded-lg text-sm font-semibold hover:bg-purple-700 transition-all"
+                    className="px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 bg-primary-600 text-white rounded-lg text-[10px] sm:text-xs md:text-sm font-semibold hover:bg-primary-700 transition-all"
                   >
-                    {getAssignedEmployer(pump._id) ? 'Reassign' : 'Assign to Employer'}
+                    <span className="hidden sm:inline">{getAssignedEmployer(pump._id) ? 'Reassign' : 'Assign to Employer'}</span>
+                    <span className="sm:hidden">{getAssignedEmployer(pump._id) ? 'Reassign' : 'Assign'}</span>
                   </button>
                   <button
                     onClick={() => handleEdit(pump)}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-700 transition-all"
+                    className="px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 bg-primary-600 text-white rounded-lg text-[10px] sm:text-xs md:text-sm font-semibold hover:bg-primary-700 transition-all"
                   >
-                    Edit Supervisor
+                    <span className="hidden md:inline">Edit Supervisor</span>
+                    <span className="md:hidden">Edit</span>
                   </button>
                   <button
                     onClick={() => handleStatusChange(pump._id, pump.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE')}
-                    className="px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-semibold hover:bg-red-700 transition-all"
+                    className="px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 bg-red-600 text-white rounded-lg text-[10px] sm:text-xs md:text-sm font-semibold hover:bg-red-700 transition-all"
                   >
                     {pump.status === 'ACTIVE' ? 'Stop' : 'Start'}
                   </button>
                   <button
                     onClick={() => handleDelete(pump._id)}
-                    className="px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-semibold hover:bg-red-700 transition-all"
+                    className="px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 bg-red-600 text-white rounded-lg text-[10px] sm:text-xs md:text-sm font-semibold hover:bg-red-700 transition-all"
                   >
                     Delete
                   </button>

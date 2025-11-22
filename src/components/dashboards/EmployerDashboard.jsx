@@ -94,19 +94,19 @@ const EmployerDashboard = () => {
   }
 
   return (
-    <div className="space-y-4 sm:space-y-6">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Employer Dashboard</h1>
-          <p className="text-sm sm:text-base text-gray-600 mt-1">Overview of your assigned pumps and gifts</p>
+    <div className="space-y-2 sm:space-y-3 md:space-y-4 lg:space-y-6">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3 md:gap-0">
+        <div className="min-w-0 flex-1">
+          <h1 className="text-display">Employer Dashboard</h1>
+          <p className="text-caption mt-0.5 sm:mt-1">Overview of your assigned pumps and gifts</p>
         </div>
         <button
           onClick={() => fetchDashboardData(true)}
           disabled={loading}
-          className="w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm sm:text-base"
+          className="btn-primary flex items-center gap-1.5 flex-shrink-0 w-full sm:w-auto"
         >
           <svg
-            className={`w-4 h-4 sm:w-5 sm:h-5 ${loading ? 'animate-spin' : ''}`}
+            className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -118,93 +118,94 @@ const EmployerDashboard = () => {
               d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
             />
           </svg>
-          {loading ? 'Refreshing...' : 'Refresh'}
+          <span className="hidden sm:inline">{loading ? 'Refreshing...' : 'Refresh'}</span>
+          <span className="sm:hidden">{loading ? '...' : '↻'}</span>
         </button>
       </div>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-        <div className="bg-white rounded-lg shadow-md p-6">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3 md:gap-4 lg:gap-6">
+        <div className="stat-card">
           <div className="flex items-center justify-between">
-            <div>
-              <p className="text-gray-600 text-sm font-medium mb-1">Daily Fuel Sales</p>
-              <p className="text-3xl font-bold text-gray-900">₹{stats.dailyFuelSales?.toLocaleString() || 0}</p>
-              <p className="text-xs text-gray-500 mt-1">Today only</p>
+            <div className="min-w-0 flex-1">
+              <p className="text-caption mb-0.5">Daily Sales</p>
+              <p className="text-2xl sm:text-3xl font-bold text-gray-900">₹{stats.dailyFuelSales?.toLocaleString() || 0}</p>
+              <p className="text-[10px] text-gray-500 mt-0.5">Today</p>
             </div>
-            <div className="bg-green-100 p-3 rounded-lg">
-              <span className="text-2xl">💰</span>
+            <div className="bg-primary-100 p-2 rounded-lg flex-shrink-0">
+              <span className="text-lg sm:text-xl">💰</span>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="stat-card">
           <div className="flex items-center justify-between">
-            <div>
-              <p className="text-gray-600 text-sm font-medium mb-1">Total Liters</p>
-              <p className="text-3xl font-bold text-gray-900">{stats.totalLiters?.toFixed(2) || 0}L</p>
-              <p className="text-xs text-gray-500 mt-1">All time</p>
+            <div className="min-w-0 flex-1">
+              <p className="text-caption mb-0.5">Total Liters</p>
+              <p className="text-2xl sm:text-3xl font-bold text-gray-900">{stats.totalLiters?.toFixed(2) || 0}L</p>
+              <p className="text-[10px] text-gray-500 mt-0.5">All time</p>
             </div>
-            <div className="bg-blue-100 p-3 rounded-lg">
-              <span className="text-2xl">⛽</span>
+            <div className="bg-primary-100 p-2 rounded-lg flex-shrink-0">
+              <span className="text-lg sm:text-xl">⛽</span>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="stat-card">
           <div className="flex items-center justify-between">
-            <div>
-              <p className="text-gray-600 text-sm font-medium mb-1">Total Invoices</p>
-              <p className="text-3xl font-bold text-gray-900">{stats.totalInvoices || 0}</p>
-              <p className="text-xs text-gray-500 mt-1">All time</p>
+            <div className="min-w-0 flex-1">
+              <p className="text-caption mb-0.5">Invoices</p>
+              <p className="text-2xl sm:text-3xl font-bold text-gray-900">{stats.totalInvoices || 0}</p>
+              <p className="text-[10px] text-gray-500 mt-0.5">All time</p>
             </div>
-            <div className="bg-purple-100 p-3 rounded-lg">
-              <span className="text-2xl">📄</span>
+            <div className="bg-primary-100 p-2 rounded-lg flex-shrink-0">
+              <span className="text-lg sm:text-xl">📄</span>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="stat-card">
           <div className="flex items-center justify-between">
-            <div>
-              <p className="text-gray-600 text-sm font-medium mb-1">Assigned Pumps</p>
-              <p className="text-3xl font-bold text-gray-900">{stats.assignedPumpsCount}</p>
+            <div className="min-w-0 flex-1">
+              <p className="text-caption mb-0.5">Assigned Pumps</p>
+              <p className="text-2xl sm:text-3xl font-bold text-gray-900">{stats.assignedPumpsCount}</p>
             </div>
-            <div className="bg-orange-100 p-3 rounded-lg">
-              <span className="text-2xl">⛽</span>
+            <div className="bg-primary-100 p-2 rounded-lg flex-shrink-0">
+              <span className="text-lg sm:text-xl">⛽</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Recent Activity */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-3 md:gap-4 lg:gap-6">
         {/* Recent Pumps */}
-        <div className="bg-white rounded-xl shadow-md overflow-hidden">
-          <div className="p-4 sm:p-6 border-b border-gray-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
-            <h2 className="text-lg sm:text-xl font-bold text-gray-900">Recent Assigned Pumps</h2>
+        <div className="card overflow-hidden">
+          <div className="p-2 sm:p-3 md:p-4 lg:p-6 border-b border-gray-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+            <h2 className="text-heading">Recent Pumps</h2>
             <button
               onClick={() => router.push('/employer/pumps')}
-              className="text-blue-600 hover:text-blue-800 text-xs sm:text-sm font-medium"
+              className="text-primary-600 hover:text-primary-700 text-xs sm:text-sm font-medium"
             >
               View All →
             </button>
           </div>
           {recentPumps.length === 0 ? (
-            <div className="p-6 text-center text-gray-500">
+            <div className="p-3 sm:p-4 md:p-6 text-center text-caption">
               No pumps assigned yet
             </div>
           ) : (
-            <div className="divide-y divide-gray-200">
+            <div className="divide-y divide-gray-100">
               {recentPumps.map((pump) => (
-                <div key={pump._id} className="p-4 hover:bg-gray-50">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="font-medium text-gray-900">{pump.name}</p>
-                      <div className="flex gap-2 mt-1">
+                <div key={pump._id} className="p-2 sm:p-3 md:p-4 hover:bg-gray-50 transition-colors">
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs sm:text-sm md:text-base font-medium text-gray-900 truncate">{pump.name}</p>
+                      <div className="flex gap-1 mt-1 flex-wrap">
                         {pump.fuelTypes?.map((type, idx) => (
                           <span
                             key={idx}
-                            className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800"
+                            className="px-1.5 py-0.5 text-[10px] sm:text-xs font-semibold rounded-full bg-primary-100 text-primary-700"
                           >
                             {type}
                           </span>
@@ -212,12 +213,12 @@ const EmployerDashboard = () => {
                       </div>
                     </div>
                     <span
-                      className={`px-2 py-1 text-xs font-semibold rounded-full ${
+                      className={`px-2 py-0.5 text-[10px] sm:text-xs font-semibold rounded-full flex-shrink-0 ${
                         pump.status === 'ACTIVE'
-                          ? 'bg-green-100 text-green-800'
+                          ? 'bg-primary-100 text-primary-700'
                           : pump.status === 'MAINTENANCE'
-                          ? 'bg-yellow-100 text-yellow-800'
-                          : 'bg-gray-100 text-gray-800'
+                          ? 'bg-yellow-100 text-yellow-700'
+                          : 'bg-gray-100 text-gray-700'
                       }`}
                     >
                       {pump.status}
@@ -230,40 +231,40 @@ const EmployerDashboard = () => {
         </div>
 
         {/* Recent Gifts */}
-        <div className="bg-white rounded-xl shadow-md overflow-hidden">
-          <div className="p-4 sm:p-6 border-b border-gray-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
-            <h2 className="text-lg sm:text-xl font-bold text-gray-900">Recent Assigned Gifts</h2>
+        <div className="card overflow-hidden">
+          <div className="p-2 sm:p-3 md:p-4 lg:p-6 border-b border-gray-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+            <h2 className="text-heading">Recent Gifts</h2>
             <button
               onClick={() => router.push('/employer/gifts')}
-              className="text-blue-600 hover:text-blue-800 text-xs sm:text-sm font-medium"
+              className="text-primary-600 hover:text-primary-700 text-xs sm:text-sm font-medium"
             >
               View All →
             </button>
           </div>
           {recentGifts.length === 0 ? (
-            <div className="p-6 text-center text-gray-500">
+            <div className="p-3 sm:p-4 md:p-6 text-center text-caption">
               No gifts assigned yet
             </div>
           ) : (
-            <div className="divide-y divide-gray-200">
+            <div className="divide-y divide-gray-100">
               {recentGifts.map((item) => (
-                <div key={item.assignmentId} className="p-4 hover:bg-gray-50">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="font-medium text-gray-900">{item.gift?.name}</p>
-                      <p className="text-sm text-gray-600 mt-1">
+                <div key={item.assignmentId} className="p-2 sm:p-3 md:p-4 hover:bg-gray-50 transition-colors">
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs sm:text-sm md:text-base font-medium text-gray-900 truncate">{item.gift?.name}</p>
+                      <p className="text-[10px] sm:text-xs text-gray-600 mt-0.5">
                         {item.pointsRequired} pts required
                       </p>
                     </div>
                     <span
-                      className={`px-2 py-1 text-xs font-semibold rounded-full ${
+                      className={`px-2 py-0.5 text-[10px] sm:text-xs font-semibold rounded-full flex-shrink-0 ${
                         item.status === 'AVAILABLE'
-                          ? 'bg-green-100 text-green-800'
+                          ? 'bg-primary-100 text-primary-700'
                           : item.status === 'PENDING'
-                          ? 'bg-yellow-100 text-yellow-800'
+                          ? 'bg-yellow-100 text-yellow-700'
                           : item.status === 'REDEEMED'
-                          ? 'bg-blue-100 text-blue-800'
-                          : 'bg-gray-100 text-gray-800'
+                          ? 'bg-primary-100 text-primary-600'
+                          : 'bg-gray-100 text-gray-700'
                       }`}
                     >
                       {item.status}

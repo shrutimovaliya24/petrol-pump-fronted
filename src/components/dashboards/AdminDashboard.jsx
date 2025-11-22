@@ -165,16 +165,16 @@ const AdminDashboard = () => {
             {
               label: 'Sales',
               data: salesData,
-              borderColor: 'rgb(59, 130, 246)',
-              backgroundColor: 'rgba(59, 130, 246, 0.1)',
+              borderColor: 'rgb(2, 132, 199)',
+              backgroundColor: 'rgba(2, 132, 199, 0.1)',
               tension: 0.4,
               fill: true,
             },
             {
               label: 'Revenue',
               data: revenueData,
-              borderColor: 'rgb(34, 197, 94)',
-              backgroundColor: 'rgba(34, 197, 94, 0.1)',
+              borderColor: 'rgb(14, 165, 233)',
+              backgroundColor: 'rgba(14, 165, 233, 0.1)',
               tension: 0.4,
               fill: true,
             },
@@ -267,14 +267,14 @@ const AdminDashboard = () => {
                 Math.round(growth * 10) / 10,
               ],
               backgroundColor: [
-                'rgba(168, 85, 247, 0.6)',
-                'rgba(249, 115, 22, 0.6)',
-                growth >= 0 ? 'rgba(34, 197, 94, 0.6)' : 'rgba(239, 68, 68, 0.6)',
+                'rgba(2, 132, 199, 0.6)',
+                'rgba(14, 165, 233, 0.6)',
+                growth >= 0 ? 'rgba(2, 132, 199, 0.6)' : 'rgba(239, 68, 68, 0.6)',
               ],
               borderColor: [
-                'rgba(168, 85, 247, 1)',
-                'rgba(249, 115, 22, 1)',
-                growth >= 0 ? 'rgba(34, 197, 94, 1)' : 'rgba(239, 68, 68, 1)',
+                'rgba(2, 132, 199, 1)',
+                'rgba(14, 165, 233, 1)',
+                growth >= 0 ? 'rgba(2, 132, 199, 1)' : 'rgba(239, 68, 68, 1)',
               ],
               borderWidth: 1,
             },
@@ -286,13 +286,13 @@ const AdminDashboard = () => {
                 0,
               ],
               backgroundColor: [
-                'rgba(168, 85, 247, 0.3)',
-                'rgba(249, 115, 22, 0.3)',
+                'rgba(2, 132, 199, 0.3)',
+                'rgba(14, 165, 233, 0.3)',
                 'rgba(156, 163, 175, 0.3)',
               ],
               borderColor: [
-                'rgba(168, 85, 247, 0.5)',
-                'rgba(249, 115, 22, 0.5)',
+                'rgba(2, 132, 199, 0.5)',
+                'rgba(14, 165, 233, 0.5)',
                 'rgba(156, 163, 175, 0.5)',
               ],
               borderWidth: 1,
@@ -321,19 +321,19 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="space-y-4 sm:space-y-6">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-          <p className="text-sm sm:text-base text-gray-600 mt-1">System overview and analytics</p>
+    <div className="space-y-2 sm:space-y-3 md:space-y-4 lg:space-y-6">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3 md:gap-0">
+        <div className="min-w-0 flex-1">
+          <h1 className="text-display">Admin Dashboard</h1>
+          <p className="text-caption mt-0.5 sm:mt-1">System overview and analytics</p>
         </div>
         <button
           onClick={handleRefresh}
           disabled={refreshing}
-          className="w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm sm:text-base"
+          className="btn-primary flex items-center gap-1.5 flex-shrink-0 w-full sm:w-auto"
         >
           <svg
-            className={`w-4 h-4 sm:w-5 sm:h-5 ${refreshing ? 'animate-spin' : ''}`}
+            className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -345,80 +345,81 @@ const AdminDashboard = () => {
               d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
             />
           </svg>
-          {refreshing ? 'Refreshing...' : 'Refresh'}
+          <span className="hidden sm:inline">{refreshing ? 'Refreshing...' : 'Refresh'}</span>
+          <span className="sm:hidden">{refreshing ? '...' : '↻'}</span>
         </button>
       </div>
 
       {/* Overview Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-        <div className="bg-white rounded-lg shadow-md p-6">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3 md:gap-4 lg:gap-6">
+        <div className="stat-card">
           <div className="flex items-center justify-between">
-            <div>
-              <p className="text-gray-600 text-sm font-medium mb-1">Total Pumps</p>
-              <p className="text-3xl font-bold text-gray-900">{stats.totalPumps || 0}</p>
+            <div className="min-w-0 flex-1">
+              <p className="text-caption mb-0.5">Total Pumps</p>
+              <p className="text-2xl sm:text-3xl font-bold text-gray-900">{stats.totalPumps || 0}</p>
             </div>
-            <div className="bg-blue-100 p-3 rounded-lg">
-              <span className="text-2xl">⛽</span>
+            <div className="bg-primary-100 p-2 rounded-lg flex-shrink-0">
+              <span className="text-lg sm:text-xl">⛽</span>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="stat-card">
           <div className="flex items-center justify-between">
-            <div>
-              <p className="text-gray-600 text-sm font-medium mb-1">Total Transactions</p>
-              <p className="text-3xl font-bold text-gray-900">{stats.totalTransactions || 0}</p>
+            <div className="min-w-0 flex-1">
+              <p className="text-caption mb-0.5">Transactions</p>
+              <p className="text-2xl sm:text-3xl font-bold text-gray-900">{stats.totalTransactions || 0}</p>
             </div>
-            <div className="bg-green-100 p-3 rounded-lg">
-              <span className="text-2xl">💰</span>
+            <div className="bg-primary-100 p-2 rounded-lg flex-shrink-0">
+              <span className="text-lg sm:text-xl">💰</span>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="stat-card">
           <div className="flex items-center justify-between">
-            <div>
-              <p className="text-gray-600 text-sm font-medium mb-1">Total Users</p>
-              <p className="text-3xl font-bold text-gray-900">{stats.totalUsers || 0}</p>
+            <div className="min-w-0 flex-1">
+              <p className="text-caption mb-0.5">Total Users</p>
+              <p className="text-2xl sm:text-3xl font-bold text-gray-900">{stats.totalUsers || 0}</p>
             </div>
-            <div className="bg-purple-100 p-3 rounded-lg">
-              <span className="text-2xl">👥</span>
+            <div className="bg-primary-100 p-2 rounded-lg flex-shrink-0">
+              <span className="text-lg sm:text-xl">👥</span>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="stat-card">
           <div className="flex items-center justify-between">
-            <div>
-              <p className="text-gray-600 text-sm font-medium mb-1">Total Gifts</p>
-              <p className="text-3xl font-bold text-gray-900">{stats.totalGifts || 0}</p>
+            <div className="min-w-0 flex-1">
+              <p className="text-caption mb-0.5">Total Gifts</p>
+              <p className="text-2xl sm:text-3xl font-bold text-gray-900">{stats.totalGifts || 0}</p>
             </div>
-            <div className="bg-orange-100 p-3 rounded-lg">
-              <span className="text-2xl">🎁</span>
+            <div className="bg-primary-100 p-2 rounded-lg flex-shrink-0">
+              <span className="text-lg sm:text-xl">🎁</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Analytics Charts Section */}
-      <div className="bg-white rounded-xl shadow-md p-4 sm:p-6">
-        <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">Analytics</h2>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+      <div className="card p-2 sm:p-3 md:p-4 lg:p-6">
+        <h2 className="text-heading mb-2 sm:mb-3 md:mb-4">Analytics</h2>
+        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-3 md:gap-4 lg:gap-6">
           {/* Sales Overview Chart */}
-          <div className="border border-gray-200 rounded-lg p-4 sm:p-6">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0 mb-3 sm:mb-4">
-              <h3 className="text-sm sm:text-base font-semibold text-gray-900">Sales Overview</h3>
+          <div className="border border-gray-100 rounded-lg p-2 sm:p-3 md:p-4 lg:p-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-2 sm:mb-3">
+              <h3 className="text-subheading">Sales Overview</h3>
               <select 
                 value={analyticsPeriod}
                 onChange={(e) => setAnalyticsPeriod(e.target.value)}
-                className="text-xs border border-gray-300 rounded px-2 py-1.5 w-full sm:w-auto"
+                className="text-xs sm:text-sm border border-gray-200 rounded px-2 py-1 sm:px-3 sm:py-1.5 w-full sm:w-auto bg-white"
               >
                 <option value="7days">Last 7 Days</option>
                 <option value="30days">Last 30 Days</option>
                 <option value="90days">Last 90 Days</option>
               </select>
             </div>
-            <div className="h-48 sm:h-64">
+            <div className="h-32 sm:h-40 md:h-48 lg:h-56">
               {salesChartData ? (
                 <Line
                   data={salesChartData}
@@ -428,6 +429,10 @@ const AdminDashboard = () => {
                     plugins: {
                       legend: {
                         position: 'top',
+                        labels: {
+                          font: { size: 11 },
+                          padding: 8,
+                        },
                       },
                       title: {
                         display: false,
@@ -437,50 +442,56 @@ const AdminDashboard = () => {
                       y: {
                         beginAtZero: true,
                         ticks: {
+                          font: { size: 10 },
                           callback: function(value) {
                             return '₹' + value.toLocaleString()
                           },
+                        },
+                      },
+                      x: {
+                        ticks: {
+                          font: { size: 10 },
                         },
                       },
                     },
                   }}
                 />
               ) : (
-                <div className="h-full flex items-center justify-center border-2 border-dashed border-gray-300 rounded-lg bg-gray-50">
+                <div className="h-full flex items-center justify-center border border-dashed border-gray-200 rounded-lg bg-gray-50">
                   <div className="text-center">
-                    <div className="text-4xl mb-2">📈</div>
-                    <p className="text-sm text-gray-600">Loading chart data...</p>
+                    <div className="text-2xl mb-1">📈</div>
+                    <p className="text-xs text-gray-500">Loading...</p>
                   </div>
                 </div>
               )}
             </div>
-            <div className="mt-3 sm:mt-4 grid grid-cols-2 gap-2 sm:gap-4">
-              <div className="text-center p-2 sm:p-3 bg-blue-50 rounded-lg">
-                <p className="text-xs text-gray-600">Total Sales</p>
-                <p className="text-sm sm:text-lg font-bold text-blue-600">₹{analytics.totalSales.toLocaleString()}</p>
+            <div className="mt-2 sm:mt-3 grid grid-cols-2 gap-1.5 sm:gap-2 md:gap-3">
+              <div className="text-center p-1.5 sm:p-2 md:p-3 bg-primary-50 rounded-lg">
+                <p className="text-caption">Total Sales</p>
+                <p className="text-xs sm:text-sm md:text-base font-bold text-primary-600">₹{analytics.totalSales.toLocaleString()}</p>
               </div>
-              <div className="text-center p-2 sm:p-3 bg-green-50 rounded-lg">
-                <p className="text-xs text-gray-600">Revenue</p>
-                <p className="text-sm sm:text-lg font-bold text-green-600">₹{analytics.revenue.toLocaleString()}</p>
+              <div className="text-center p-1.5 sm:p-2 md:p-3 bg-primary-50 rounded-lg">
+                <p className="text-caption">Revenue</p>
+                <p className="text-xs sm:text-sm md:text-base font-bold text-primary-700">₹{analytics.revenue.toLocaleString()}</p>
               </div>
             </div>
           </div>
 
           {/* Performance Metrics Chart */}
-          <div className="border border-gray-200 rounded-lg p-4 sm:p-6">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0 mb-3 sm:mb-4">
-              <h3 className="text-sm sm:text-base font-semibold text-gray-900">Performance Metrics</h3>
+          <div className="border border-gray-100 rounded-lg p-2 sm:p-3 md:p-4 lg:p-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-2 sm:mb-3">
+              <h3 className="text-subheading">Performance</h3>
               <select 
                 value={performancePeriod}
                 onChange={(e) => setPerformancePeriod(e.target.value)}
-                className="text-xs border border-gray-300 rounded px-2 py-1.5 w-full sm:w-auto"
+                className="text-xs sm:text-sm border border-gray-200 rounded px-2 py-1 sm:px-3 sm:py-1.5 w-full sm:w-auto bg-white"
               >
                 <option value="thisMonth">This Month</option>
                 <option value="lastMonth">Last Month</option>
                 <option value="thisYear">This Year</option>
               </select>
             </div>
-            <div className="h-48 sm:h-64">
+            <div className="h-32 sm:h-40 md:h-48 lg:h-56">
               {performanceChartData ? (
                 <Bar
                   data={performanceChartData}
@@ -490,6 +501,10 @@ const AdminDashboard = () => {
                     plugins: {
                       legend: {
                         position: 'top',
+                        labels: {
+                          font: { size: 11 },
+                          padding: 8,
+                        },
                       },
                       title: {
                         display: false,
@@ -499,6 +514,7 @@ const AdminDashboard = () => {
                       y: {
                         beginAtZero: true,
                         ticks: {
+                          font: { size: 10 },
                           callback: function(value, index) {
                             if (index === 2) {
                               return value + '%'
@@ -507,30 +523,35 @@ const AdminDashboard = () => {
                           },
                         },
                       },
+                      x: {
+                        ticks: {
+                          font: { size: 10 },
+                        },
+                      },
                     },
                   }}
                 />
               ) : (
-                <div className="h-full flex items-center justify-center border-2 border-dashed border-gray-300 rounded-lg bg-gray-50">
+                <div className="h-full flex items-center justify-center border border-dashed border-gray-200 rounded-lg bg-gray-50">
                   <div className="text-center">
-                    <div className="text-4xl mb-2">📊</div>
-                    <p className="text-sm text-gray-600">Loading chart data...</p>
+                    <div className="text-2xl mb-1">📊</div>
+                    <p className="text-xs text-gray-500">Loading...</p>
                   </div>
                 </div>
               )}
             </div>
-            <div className="mt-3 sm:mt-4 grid grid-cols-3 gap-2">
-              <div className="text-center p-2 bg-purple-50 rounded-lg">
-                <p className="text-xs text-gray-600">Transactions</p>
-                <p className="text-xs sm:text-sm font-bold text-purple-600">{performanceMetrics.transactions}</p>
+            <div className="mt-2 sm:mt-3 grid grid-cols-3 gap-1 sm:gap-1.5 md:gap-2">
+              <div className="text-center p-1 sm:p-1.5 md:p-2 bg-primary-50 rounded-lg">
+                <p className="text-caption">Transactions</p>
+                <p className="text-xs sm:text-sm md:text-base font-bold text-primary-600">{performanceMetrics.transactions}</p>
               </div>
-              <div className="text-center p-2 bg-orange-50 rounded-lg">
-                <p className="text-xs text-gray-600">Avg. Order</p>
-                <p className="text-xs sm:text-sm font-bold text-orange-600">₹{performanceMetrics.avgOrder.toLocaleString()}</p>
+              <div className="text-center p-1 sm:p-1.5 md:p-2 bg-primary-50 rounded-lg">
+                <p className="text-caption">Avg. Order</p>
+                <p className="text-xs sm:text-sm md:text-base font-bold text-primary-600">₹{performanceMetrics.avgOrder.toLocaleString()}</p>
               </div>
-              <div className="text-center p-2 bg-pink-50 rounded-lg">
-                <p className="text-xs text-gray-600">Growth</p>
-                <p className={`text-xs sm:text-sm font-bold ${performanceMetrics.growth >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+              <div className="text-center p-1 sm:p-1.5 md:p-2 bg-primary-50 rounded-lg">
+                <p className="text-caption">Growth</p>
+                <p className={`text-xs sm:text-sm md:text-base font-bold ${performanceMetrics.growth >= 0 ? 'text-primary-700' : 'text-red-600'}`}>
                   {performanceMetrics.growth >= 0 ? '+' : ''}{performanceMetrics.growth}%
                 </p>
               </div>

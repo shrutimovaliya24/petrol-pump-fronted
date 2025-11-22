@@ -82,39 +82,39 @@ const RewardPoints = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="text-gray-500">Loading...</div>
+      <div className="flex items-center justify-center h-48 sm:h-64">
+        <div className="text-body text-gray-500">Loading...</div>
       </div>
     )
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-2 sm:space-y-3 md:space-y-4 lg:space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Reward Points</h1>
-        <p className="text-gray-600 mt-1">View and track reward points issued to users</p>
+        <h1 className="text-display">Reward Points</h1>
+        <p className="text-caption mt-1">View and track reward points issued to users</p>
       </div>
 
       {/* Summary Card */}
-      <div className="bg-white rounded-lg shadow-md p-6">
+      <div className="stat-card">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-gray-600 text-sm font-medium mb-1">Total Points Issued</p>
-            <p className="text-3xl font-bold text-gray-900">{totalPointsIssued.toLocaleString()} pts</p>
+            <p className="text-caption mb-1">Total Points Issued</p>
+            <p className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">{totalPointsIssued.toLocaleString()} pts</p>
           </div>
-          <div className="bg-green-100 p-3 rounded-lg">
-            <span className="text-2xl">⭐</span>
+          <div className="bg-green-100 p-2 sm:p-3 rounded-lg">
+            <span className="text-lg sm:text-xl md:text-2xl">⭐</span>
           </div>
         </div>
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-lg shadow-md p-4 flex flex-col sm:flex-row gap-4">
+      <div className="card p-3 sm:p-4 flex flex-col sm:flex-row gap-2 sm:gap-3 md:gap-4">
         <div className="flex-1">
           <select
             value={filterUser}
             onChange={(e) => setFilterUser(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 text-xs sm:text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
           >
             <option value="">All Users</option>
             {users.map((u) => (
@@ -124,12 +124,12 @@ const RewardPoints = () => {
             ))}
           </select>
         </div>
-        <div className="sm:w-48">
+        <div className="sm:w-40 md:w-48">
           <input
             type="date"
             value={filterDate}
             onChange={(e) => setFilterDate(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 text-xs sm:text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
           />
         </div>
         <div className="flex-1 flex gap-2">
@@ -143,18 +143,18 @@ const RewardPoints = () => {
                 handleSearch()
               }
             }}
-            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-1 px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 text-xs sm:text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
           />
           <button
             onClick={handleSearch}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all font-medium whitespace-nowrap"
+            className="btn-primary whitespace-nowrap text-xs sm:text-sm"
           >
             Search
           </button>
           {filterInvoice && (
             <button
               onClick={handleClearSearch}
-              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all font-medium whitespace-nowrap"
+              className="btn-secondary whitespace-nowrap text-xs sm:text-sm"
             >
               Clear
             </button>
@@ -164,39 +164,39 @@ const RewardPoints = () => {
 
       {/* Reward Points Table */}
       {filteredPoints.length === 0 ? (
-        <div className="bg-white rounded-xl shadow-md p-12 text-center">
+        <div className="card p-6 sm:p-8 md:p-12 text-center">
           <div className="flex flex-col items-center">
-            <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
-              <span className="text-4xl">⭐</span>
+            <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gray-100 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
+              <span className="text-2xl sm:text-3xl md:text-4xl">⭐</span>
             </div>
-            <p className="text-gray-500 text-lg font-medium">No reward points found</p>
-            <p className="text-gray-400 text-sm mt-2">
+            <p className="text-body font-medium text-gray-500">No reward points found</p>
+            <p className="text-caption mt-2 text-gray-400">
               {filterUser || filterDate || filterInvoice ? 'Try adjusting your filters' : 'No points have been issued yet'}
             </p>
           </div>
         </div>
       ) : (
-        <div className="bg-white rounded-xl shadow-md overflow-hidden">
+        <div className="card overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="table-modern w-full">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">
                     Invoice No.
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">
                     User
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">
                     Transaction Amount
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">
                     Points Issued
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">
                     Date & Time
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">
                     Status
                   </th>
                 </tr>
@@ -204,29 +204,29 @@ const RewardPoints = () => {
               <tbody className="bg-white divide-y divide-gray-200">
                 {filteredPoints.map((point) => (
                   <tr key={point._id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-sm font-medium text-gray-900">
+                    <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                      <span className="text-body font-medium">
                         {point.transactionId?.invoiceNumber || 'N/A'}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-sm text-gray-900">
+                    <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                      <span className="text-body">
                         {point.userId?.email || point.userId?.name || 'N/A'}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-sm font-semibold text-gray-900">
+                    <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                      <span className="text-body font-semibold">
                         ₹{point.transactionId?.amount?.toLocaleString() || 0}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-sm font-semibold text-green-600">{point.points || 0} pts</span>
+                    <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                      <span className="text-body font-semibold text-green-600">{point.points || 0} pts</span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-sm text-gray-600">{formatDate(point.createdAt)}</span>
+                    <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                      <span className="text-body">{formatDate(point.createdAt)}</span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                    <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                      <span className="px-2 py-1 text-caption font-semibold rounded-full bg-green-100 text-green-800">
                         Issued
                       </span>
                     </td>

@@ -291,7 +291,7 @@ const Transactions = () => {
       // Fallback to timestamp-based if API fails
       const timestamp = Date.now()
       const random = Math.floor(Math.random() * 1000)
-      return `INV-${timestamp}-${random}`
+      return `I-${timestamp}-${random}`
     }
   }
 
@@ -400,12 +400,12 @@ const Transactions = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-2 sm:space-y-3 md:space-y-4 lg:space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Transaction History</h1>
-          <p className="text-sm sm:text-base text-gray-600 mt-1 hidden sm:block">View and manage all transactions</p>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3 md:gap-0">
+        <div className="min-w-0 flex-1">
+          <h1 className="text-display">Transaction History</h1>
+          <p className="text-caption mt-0.5 sm:mt-1 hidden sm:block">View and manage all transactions</p>
         </div>
         <button
           onClick={() => {
@@ -418,21 +418,23 @@ const Transactions = () => {
             setShowAddModal(true)
           }}
           disabled={!user || !user.id}
-          className="w-full sm:w-auto bg-blue-600 text-white px-4 sm:px-6 py-2.5 sm:py-2 rounded-lg font-semibold hover:bg-blue-700 transition-all disabled:bg-gray-400 disabled:cursor-not-allowed text-sm sm:text-base"
+          className="btn-primary flex items-center gap-1.5 flex-shrink-0 w-full sm:w-auto"
         >
-          + New Transaction
+          <span className="text-base sm:text-lg">+</span>
+          <span className="hidden sm:inline">New Transaction</span>
+          <span className="sm:hidden">New</span>
         </button>
       </div>
 
       {/* Filters Section */}
-      <div className="bg-white rounded-xl shadow-md p-4 sm:p-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
+      <div className="card p-2 sm:p-3 md:p-4 lg:p-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 sm:gap-3 md:gap-4">
           {/* Search */}
           <div className="lg:col-span-1">
-            <label className="block text-xs font-semibold text-gray-700 mb-1">Search</label>
+            <label className="block text-label mb-1">Search</label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="absolute inset-y-0 left-0 pl-2 sm:pl-3 flex items-center pointer-events-none">
+                <svg className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </div>
@@ -440,41 +442,41 @@ const Transactions = () => {
                 type="text"
                 value={filters.search}
                 onChange={(e) => handleFilterChange('search', e.target.value)}
-                className="w-full pl-10 pr-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Search transactions..."
+                className="w-full pl-8 sm:pl-10 pr-2 sm:pr-3 py-1.5 sm:py-2 text-xs sm:text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                placeholder="Search..."
               />
             </div>
           </div>
 
           {/* Date From */}
           <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-1">Date From</label>
+            <label className="block text-label mb-1">Date From</label>
             <input
               type="date"
               value={filters.dateFrom}
               onChange={(e) => handleFilterChange('dateFrom', e.target.value)}
-              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
           </div>
 
           {/* Date To */}
           <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-1">Date To</label>
+            <label className="block text-label mb-1">Date To</label>
             <input
               type="date"
               value={filters.dateTo}
               onChange={(e) => handleFilterChange('dateTo', e.target.value)}
-              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
           </div>
 
           {/* Select Pump */}
           <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-1">Select Pump</label>
+            <label className="block text-label mb-1">Select Pump</label>
             <select
               value={filters.pumpId}
               onChange={(e) => handleFilterChange('pumpId', e.target.value)}
-              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white"
             >
               <option value="">All Pumps</option>
               {pumps.map((pump) => (
@@ -489,12 +491,13 @@ const Transactions = () => {
           <div className="flex items-end">
             <button
               onClick={exportToCSV}
-              className="w-full bg-purple-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-purple-700 transition-all flex items-center justify-center gap-2"
+              className="w-full btn-primary flex items-center justify-center gap-1.5 sm:gap-2"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
-              Export CSV
+              <span className="hidden sm:inline">Export CSV</span>
+              <span className="sm:hidden">Export</span>
             </button>
           </div>
         </div>
@@ -502,95 +505,75 @@ const Transactions = () => {
 
       {/* Transactions Table */}
       {transactions.length === 0 ? (
-        <div className="bg-white rounded-xl shadow-md p-8 sm:p-12 text-center">
+        <div className="card p-6 sm:p-8 md:p-12 text-center">
           <div className="flex flex-col items-center">
-            <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
-              <span className="text-3xl sm:text-4xl">💰</span>
+            <div className="w-12 h-12 sm:w-14 sm:h-16 bg-gray-100 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
+              <span className="text-2xl sm:text-3xl md:text-4xl">💰</span>
             </div>
-            <p className="text-gray-500 text-base sm:text-lg font-medium">No transactions found</p>
-            <p className="text-gray-400 text-xs sm:text-sm mt-2">Start by creating a new transaction</p>
+            <p className="text-body font-medium">No transactions found</p>
+            <p className="text-caption mt-1 sm:mt-2">Start by creating a new transaction</p>
           </div>
         </div>
       ) : (
         <>
           {/* Desktop Table View */}
-          <div className="hidden lg:block bg-white rounded-xl shadow-md overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-50">
+          <div className="hidden lg:block card overflow-hidden">
+            <div className="overflow-x-auto table-responsive">
+              <table className="table-modern">
+                <thead>
                   <tr>
-                    <th className="px-4 xl:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Invoice No.
-                    </th>
-                    <th className="px-4 xl:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      User
-                    </th>
-                    <th className="px-4 xl:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Employer
-                    </th>
-                    <th className="px-4 xl:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Pump
-                    </th>
-                    <th className="px-4 xl:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Amount
-                    </th>
-                    <th className="px-4 xl:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Liters
-                    </th>
-                    <th className="px-4 xl:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Payment
-                    </th>
-                    <th className="px-4 xl:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Date & Time
-                    </th>
-                    <th className="px-4 xl:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Reward Points
-                    </th>
-                    <th className="px-4 xl:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Actions
-                    </th>
+                    <th>Invoice No.</th>
+                    <th>User</th>
+                    <th>Employer</th>
+                    <th>Pump</th>
+                    <th>Amount</th>
+                    <th>Liters</th>
+                    <th>Payment</th>
+                    <th>Date & Time</th>
+                    <th>Points</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody>
                   {transactions.map((transaction) => (
-                    <tr key={transaction._id} className="hover:bg-gray-50">
-                      <td className="px-4 xl:px-6 py-4 whitespace-nowrap">
+                    <tr key={transaction._id}>
+                      <td>
                         <span className="text-sm font-medium text-gray-900">{transaction.invoiceNumber || 'N/A'}</span>
                       </td>
-                      <td className="px-4 xl:px-6 py-4 whitespace-nowrap">
-                        <span className="text-sm text-gray-900">
+                      <td>
+                        <span className="text-xs text-gray-900 truncate block max-w-[150px]">
                           {transaction.userId?.email || transaction.customerEmail || 'N/A'}
                         </span>
                       </td>
-                      <td className="px-4 xl:px-6 py-4 whitespace-nowrap">
-                        <span className="text-sm text-gray-900">
+                      <td>
+                        <span className="text-xs text-gray-900 truncate block max-w-[150px]">
                           {transaction.employerId?.email || transaction.employerId?.name || user?.email || 'N/A'}
                         </span>
                       </td>
-                      <td className="px-4 xl:px-6 py-4 whitespace-nowrap">
-                        <span className="text-sm text-gray-900">
+                      <td>
+                        <span className="text-xs text-gray-900 truncate block max-w-[120px]">
                           {transaction.pumpId?.name || transaction.pumpDetails || 'N/A'}
                         </span>
                       </td>
-                      <td className="px-4 xl:px-6 py-4 whitespace-nowrap">
-                        <span className="text-sm font-semibold text-gray-900">₹{transaction.amount?.toLocaleString() || 0}</span>
+                      <td>
+                        <span className="text-xs sm:text-sm font-semibold text-gray-900">₹{transaction.amount?.toLocaleString() || 0}</span>
                       </td>
-                      <td className="px-4 xl:px-6 py-4 whitespace-nowrap">
-                        <span className="text-sm text-gray-900">{transaction.liters || 0}L</span>
+                      <td>
+                        <span className="text-xs text-gray-900">{transaction.liters || 0}L</span>
                       </td>
-                      <td className="px-4 xl:px-6 py-4 whitespace-nowrap">
-                        <span className="text-sm text-gray-900">{transaction.payment || transaction.paymentType || 'Cash'}</span>
+                      <td>
+                        <span className="text-xs text-gray-900">{transaction.payment || transaction.paymentType || 'Cash'}</span>
                       </td>
-                      <td className="px-4 xl:px-6 py-4 whitespace-nowrap">
-                        <span className="text-sm text-gray-600">{formatDate(transaction.createdAt)}</span>
+                      <td>
+                        <span className="text-xs text-gray-600">{formatDate(transaction.createdAt)}</span>
                       </td>
-                      <td className="px-4 xl:px-6 py-4 whitespace-nowrap">
-                        <span className="text-sm font-semibold text-green-600">{transaction.rewardPoints || 0} pts</span>
+                      <td>
+                        <span className="text-xs sm:text-sm font-semibold text-primary-600">{transaction.rewardPoints || 0} pts</span>
                       </td>
-                      <td className="px-4 xl:px-6 py-4 whitespace-nowrap text-sm font-medium">
+                      <td>
                         <button
                           onClick={() => handleViewInvoice(transaction)}
-                          className="text-blue-600 hover:text-blue-900"
+                          className="text-primary-600 hover:text-primary-700 text-xs font-medium"
                           title="View Invoice"
                         >
                           Invoice
@@ -604,21 +587,21 @@ const Transactions = () => {
           </div>
 
           {/* Mobile Card View */}
-          <div className="lg:hidden space-y-4">
+          <div className="lg:hidden space-y-2 sm:space-y-3 p-2 sm:p-3">
             {transactions.map((transaction) => (
-              <div key={transaction._id} className="bg-white rounded-xl shadow-md p-4 sm:p-6">
-                <div className="space-y-3">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <h3 className="text-sm font-semibold text-gray-900 mb-1">
+              <div key={transaction._id} className="card p-2 sm:p-3 md:p-4">
+                <div className="space-y-1.5 sm:space-y-2 md:space-y-3">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-xs sm:text-sm font-semibold text-gray-900 mb-0.5 sm:mb-1 truncate">
                         {transaction.invoiceNumber || 'N/A'}
                       </h3>
-                      <p className="text-xs text-gray-600">{formatDate(transaction.createdAt)}</p>
+                      <p className="text-[10px] sm:text-xs text-gray-600">{formatDate(transaction.createdAt)}</p>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
                       <button
                         onClick={() => handleViewInvoice(transaction)}
-                        className="text-blue-600 hover:text-blue-900 text-sm font-medium px-3 py-1 border border-blue-600 rounded-lg"
+                        className="text-primary-600 hover:text-primary-700 text-[10px] sm:text-xs font-medium px-2 py-1 sm:px-3 sm:py-1 border border-primary-600 rounded-lg"
                         title="View Invoice"
                       >
                         Invoice
@@ -626,34 +609,34 @@ const Transactions = () => {
                     </div>
                   </div>
                   
-                  <div className="grid grid-cols-2 gap-3 pt-2 border-t border-gray-100">
+                  <div className="grid grid-cols-2 gap-1.5 sm:gap-2 md:gap-3 pt-1.5 sm:pt-2 border-t border-gray-100">
                     <div>
-                      <p className="text-xs text-gray-500 mb-1">User</p>
-                      <p className="text-sm font-medium text-gray-900 truncate">
+                      <p className="text-caption mb-0.5">User</p>
+                      <p className="text-xs sm:text-sm font-medium text-gray-900 truncate">
                         {transaction.userId?.email || transaction.customerEmail || 'N/A'}
                       </p>
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500 mb-1">Pump</p>
-                      <p className="text-sm font-medium text-gray-900 truncate">
+                      <p className="text-caption mb-0.5">Pump</p>
+                      <p className="text-xs sm:text-sm font-medium text-gray-900 truncate">
                         {transaction.pumpId?.name || transaction.pumpDetails || 'N/A'}
                       </p>
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500 mb-1">Amount</p>
-                      <p className="text-sm font-semibold text-gray-900">₹{transaction.amount?.toLocaleString() || 0}</p>
+                      <p className="text-caption mb-0.5">Amount</p>
+                      <p className="text-xs sm:text-sm font-semibold text-gray-900">₹{transaction.amount?.toLocaleString() || 0}</p>
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500 mb-1">Liters</p>
-                      <p className="text-sm font-medium text-gray-900">{transaction.liters || 0}L</p>
+                      <p className="text-caption mb-0.5">Liters</p>
+                      <p className="text-xs sm:text-sm font-medium text-gray-900">{transaction.liters || 0}L</p>
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500 mb-1">Payment</p>
-                      <p className="text-sm font-medium text-gray-900">{transaction.payment || transaction.paymentType || 'Cash'}</p>
+                      <p className="text-caption mb-0.5">Payment</p>
+                      <p className="text-xs sm:text-sm font-medium text-gray-900">{transaction.payment || transaction.paymentType || 'Cash'}</p>
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500 mb-1">Reward Points</p>
-                      <p className="text-sm font-semibold text-green-600">{transaction.rewardPoints || 0} pts</p>
+                      <p className="text-caption mb-0.5">Reward Points</p>
+                      <p className="text-xs sm:text-sm font-semibold text-primary-600">{transaction.rewardPoints || 0} pts</p>
                     </div>
                   </div>
                 </div>
@@ -665,48 +648,48 @@ const Transactions = () => {
 
       {/* Add Transaction Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-3 sm:p-4">
-          <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200 sticky top-0 bg-white z-10">
-              <h2 className="text-lg sm:text-xl font-bold text-gray-900">Record New Transaction</h2>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-3 md:p-4">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-2xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between p-3 sm:p-4 md:p-6 border-b border-gray-100 sticky top-0 bg-white z-10">
+              <h2 className="text-heading">Record New Transaction</h2>
               <button
                 onClick={() => {
                   setShowAddModal(false)
                   resetForm()
                 }}
-                className="text-gray-400 hover:text-gray-600 text-2xl sm:text-3xl p-1"
+                className="text-gray-400 hover:text-gray-600 text-xl sm:text-2xl p-1"
               >
                 ×
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4">
+            <form onSubmit={handleSubmit} className="p-3 sm:p-4 md:p-6 space-y-3 sm:space-y-4">
               <div className="flex items-center gap-2">
                 <input
                   type="checkbox"
                   checked={formData.autoInvoice}
                   onChange={(e) => setFormData({ ...formData, autoInvoice: e.target.checked })}
-                  className="w-4 h-4"
+                  className="w-4 h-4 sm:w-5 sm:h-5"
                 />
-                <label className="text-sm font-medium text-gray-700">Auto-generate Invoice Number</label>
+                <label className="text-xs sm:text-sm font-medium text-gray-700">Auto-generate Invoice Number</label>
               </div>
 
               {!formData.autoInvoice && (
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Invoice Number</label>
+                  <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">Invoice Number</label>
                   <input
                     type="text"
                     required={!formData.autoInvoice}
                     value={formData.invoiceNumber}
                     onChange={(e) => setFormData({ ...formData, invoiceNumber: e.target.value })}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 sm:px-4 sm:py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     placeholder="Enter invoice number"
                   />
                 </div>
               )}
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
                   Customer Email <span className="text-red-500">*</span>
                 </label>
                 {assignedUsers.length > 0 ? (
@@ -714,7 +697,7 @@ const Transactions = () => {
                     required
                     value={formData.customerEmail}
                     onChange={(e) => setFormData({ ...formData, customerEmail: e.target.value })}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 sm:px-4 sm:py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white"
                   >
                     <option value="">Select customer email</option>
                     {assignedUsers.map((user) => (
@@ -724,27 +707,27 @@ const Transactions = () => {
                     ))}
                   </select>
                 ) : (
-                  <div className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50">
-                    <p className="text-sm text-gray-500">No users assigned to this employer</p>
+                  <div className="w-full px-3 py-2 sm:px-4 sm:py-2 border border-gray-200 rounded-lg bg-gray-50">
+                    <p className="text-xs sm:text-sm text-gray-500">No users assigned to this employer</p>
                   </div>
                 )}
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
                   Customer Name
                 </label>
                 <input
                   type="text"
                   value={formData.customerName}
                   onChange={(e) => setFormData({ ...formData, customerName: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 sm:px-4 sm:py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="Enter customer name (optional)"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
                   Pump <span className="text-red-500">*</span>
                 </label>
                 {pumps.length > 0 ? (
@@ -756,9 +739,9 @@ const Transactions = () => {
                 )}
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 md:gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
                     Amount (₹) <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -767,13 +750,13 @@ const Transactions = () => {
                     required
                     value={formData.amount}
                     onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base"
+                    className="w-full px-3 py-2 sm:px-4 sm:py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     placeholder="Enter amount"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
                     Liters <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -782,21 +765,21 @@ const Transactions = () => {
                     required
                     value={formData.liters}
                     onChange={(e) => setFormData({ ...formData, liters: e.target.value })}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base"
+                    className="w-full px-3 py-2 sm:px-4 sm:py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     placeholder="Enter liters"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
                   Payment Type <span className="text-red-500">*</span>
                 </label>
                 <select
                   required
                   value={formData.paymentType}
                   onChange={(e) => setFormData({ ...formData, paymentType: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 sm:px-4 sm:py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white"
                 >
                   <option value="Cash">Cash</option>
                   <option value="Card">Card</option>
@@ -805,20 +788,20 @@ const Transactions = () => {
                 </select>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-3 pt-4">
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-3 sm:pt-4">
                 <button
                   type="button"
                   onClick={() => {
                     setShowAddModal(false)
                     resetForm()
                   }}
-                  className="flex-1 px-4 py-2.5 sm:py-2 bg-gray-200 text-gray-800 rounded-lg font-semibold hover:bg-gray-300 transition-all text-sm sm:text-base"
+                  className="flex-1 btn-secondary"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 bg-blue-600 text-white px-4 py-2.5 sm:py-2 rounded-lg font-semibold hover:bg-blue-700 transition-all text-sm sm:text-base"
+                  className="flex-1 btn-primary"
                 >
                   Record Transaction
                 </button>

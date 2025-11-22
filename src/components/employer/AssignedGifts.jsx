@@ -91,35 +91,35 @@ const AssignedGifts = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="text-gray-500">Loading...</div>
+      <div className="flex items-center justify-center h-48 sm:h-64">
+        <div className="text-body text-gray-500">Loading...</div>
       </div>
     )
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-2 sm:space-y-3 md:space-y-4 lg:space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Assigned Gifts</h1>
-        <p className="text-gray-600 mt-1">View gifts assigned to you by supervisor</p>
+        <h1 className="text-display">Assigned Gifts</h1>
+        <p className="text-caption mt-1">View gifts assigned to you by supervisor</p>
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-lg shadow-md p-4 flex flex-col sm:flex-row gap-4">
+      <div className="card p-3 sm:p-4 flex flex-col sm:flex-row gap-2 sm:gap-3 md:gap-4">
         <div className="flex-1">
           <input
             type="text"
             placeholder="Search by gift name..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 text-xs sm:text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
           />
         </div>
-        <div className="sm:w-48">
+        <div className="sm:w-40 md:w-48">
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 text-xs sm:text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
           >
             <option value="ALL">All Status</option>
             <option value="AVAILABLE">Available</option>
@@ -128,11 +128,11 @@ const AssignedGifts = () => {
             <option value="EXPIRED">Expired</option>
           </select>
         </div>
-        <div className="sm:w-48">
+        <div className="sm:w-40 md:w-48">
           <select
             value={filterCategory}
             onChange={(e) => setFilterCategory(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 text-xs sm:text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
           >
             {categories.map((cat) => (
               <option key={cat} value={cat}>
@@ -145,13 +145,13 @@ const AssignedGifts = () => {
 
       {/* Gifts List */}
       {filteredGifts.length === 0 ? (
-        <div className="bg-white rounded-xl shadow-md p-12 text-center">
+        <div className="card p-6 sm:p-8 md:p-12 text-center">
           <div className="flex flex-col items-center">
-            <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
-              <span className="text-4xl">🎁</span>
+            <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gray-100 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
+              <span className="text-2xl sm:text-3xl md:text-4xl">🎁</span>
             </div>
-            <p className="text-gray-500 text-lg font-medium">No gifts found</p>
-            <p className="text-gray-400 text-sm mt-2">
+            <p className="text-body font-medium text-gray-500">No gifts found</p>
+            <p className="text-caption mt-2 text-gray-400">
               {searchTerm || filterStatus !== 'ALL' || filterCategory !== 'ALL'
                 ? 'Try adjusting your filters'
                 : 'No gifts have been assigned to you yet'}
@@ -159,36 +159,36 @@ const AssignedGifts = () => {
           </div>
         </div>
       ) : (
-        <div className="bg-white rounded-xl shadow-md overflow-hidden">
+        <div className="card overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="table-modern w-full">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">
                     Gift
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">
                     Category
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">
                     Points Required
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">
                     Available Points
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">
                     Assigned Date
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">
                     Assigned By
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">
                     Availability
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">
                     Approve Status
                   </th>
                 </tr>
@@ -196,32 +196,32 @@ const AssignedGifts = () => {
               <tbody className="bg-white divide-y divide-gray-200">
                 {filteredGifts.map((item) => (
                   <tr key={item.assignmentId} className="hover:bg-gray-50">
-                    <td className="px-6 py-4">
+                    <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4">
                       <div>
-                        <p className="text-sm font-medium text-gray-900">{item.gift?.name}</p>
-                        <p className="text-xs text-gray-500 mt-1">{item.gift?.description}</p>
+                        <p className="text-body font-medium">{item.gift?.name}</p>
+                        <p className="text-caption mt-1">{item.gift?.description}</p>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-2 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-800">
+                    <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                      <span className="px-2 py-1 text-caption font-semibold rounded-full bg-purple-100 text-purple-800">
                         {item.gift?.category || 'N/A'}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-sm font-semibold text-gray-900">
+                    <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                      <span className="text-body font-semibold">
                         {item.pointsRequired} pts
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-sm text-gray-900">{item.pointsAvailable} pts</span>
+                    <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                      <span className="text-body">{item.pointsAvailable} pts</span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(item.status)}`}>
+                    <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                      <span className={`px-2 py-1 text-caption font-semibold rounded-full ${getStatusColor(item.status)}`}>
                         {item.status}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-sm text-gray-600">
+                    <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                      <span className="text-body">
                         {item.assignedAt
                           ? new Date(item.assignedAt).toLocaleDateString('en-US', {
                               year: 'numeric',
@@ -231,14 +231,14 @@ const AssignedGifts = () => {
                           : 'N/A'}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-sm text-gray-600">
+                    <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                      <span className="text-body">
                         {item.assignedBy?.email || 'N/A'}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
                       <span
-                        className={`px-2 py-1 text-xs font-semibold rounded-full ${
+                        className={`px-2 py-1 text-caption font-semibold rounded-full ${
                           item.availabilityStatus === 'available'
                             ? 'bg-green-100 text-green-800'
                             : item.availabilityStatus === 'low'
@@ -249,29 +249,29 @@ const AssignedGifts = () => {
                         {item.availabilityStatus?.toUpperCase() || 'N/A'}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap text-body font-medium">
                       <select
                         value={item.availabilityStatus || ''}
                         onChange={(e) => handleUpdateAvailability(item.assignmentId, e.target.value)}
                         disabled={updatingStatus === item.assignmentId}
-                        className="px-2 py-1 border border-gray-300 rounded text-xs focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+                        className="px-2 py-1 text-caption border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-500 disabled:opacity-50"
                       >
                         <option value="available">Available</option>
                         <option value="low">Low</option>
                         <option value="out-of-stock">Out of Stock</option>
                       </select>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap text-body font-medium">
                       {item.status === 'PENDING' ? (
                         <button
                           onClick={() => handleApproveStatus(item.assignmentId)}
                           disabled={updatingStatus === item.assignmentId}
-                          className="px-3 py-1.5 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all font-medium disabled:opacity-50 disabled:cursor-not-allowed text-xs"
+                          className="btn-primary text-xs sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           {updatingStatus === item.assignmentId ? 'Approving...' : 'Approve'}
                         </button>
                       ) : (
-                        <span className="text-xs text-gray-500">-</span>
+                        <span className="text-caption text-gray-500">-</span>
                       )}
                     </td>
                   </tr>

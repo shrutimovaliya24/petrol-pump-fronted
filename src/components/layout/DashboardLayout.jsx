@@ -5,39 +5,47 @@ import Header from './Header'
 
 const DashboardLayout = ({ children, role }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
+  const [isDesktop, setIsDesktop] = useState(false)
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768)
-      if (window.innerWidth >= 768) {
+    const checkScreenSize = () => {
+      // Desktop breakpoint is 1440px, so desktop is >= 1440px
+      const isDesktopView = window.innerWidth >= 1440
+      setIsDesktop(isDesktopView)
+      // Auto-open sidebar on desktop (always visible)
+      // On mobile/tablet, sidebar starts closed and opens via menu click
+      if (isDesktopView) {
         setSidebarOpen(true)
       } else {
         setSidebarOpen(false)
       }
     }
     
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
+    checkScreenSize()
+    window.addEventListener('resize', checkScreenSize)
+    return () => window.removeEventListener('resize', checkScreenSize)
   }, [])
 
   const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen)
+    // Only allow toggling on mobile/tablet, not desktop
+    if (!isDesktop) {
+      setSidebarOpen(!sidebarOpen)
+    }
   }
 
   const closeSidebar = () => {
-    if (isMobile) {
+    // Only allow closing on mobile/tablet, not desktop
+    if (!isDesktop) {
       setSidebarOpen(false)
     }
   }
 
   return (
     <div className="flex h-screen bg-gray-50 overflow-hidden">
-      {/* Mobile Overlay */}
-      {isMobile && sidebarOpen && (
+      {/* Mobile/Tablet Overlay - Only show on screens < 1440px */}
+      {!isDesktop && sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+          className="fixed inset-0 bg-black bg-opacity-50 z-40"
           onClick={closeSidebar}
         />
       )}
@@ -45,22 +53,20 @@ const DashboardLayout = ({ children, role }) => {
       {/* Sidebar */}
       <div
         className={`${
-          sidebarOpen
-            ? isMobile
-              ? 'fixed inset-y-0 left-0 z-50 w-64'
-              : 'w-64'
-            : isMobile
-            ? '-translate-x-full fixed'
-            : 'w-0'
+          isDesktop
+            ? 'w-56 sm:w-64' // Desktop: Always visible, fixed width
+            : sidebarOpen
+            ? 'fixed inset-y-0 left-0 z-50 w-56 sm:w-64' // Mobile/Tablet: Open state
+            : '-translate-x-full fixed' // Mobile/Tablet: Closed state (hidden)
         } transition-all duration-300 overflow-hidden`}
       >
-        <Sidebar role={role} onClose={closeSidebar} isMobile={isMobile} />
+        <Sidebar role={role} onClose={closeSidebar} isMobile={!isDesktop} />
       </div>
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden w-full">
-        <Header onMenuClick={toggleSidebar} />
-        <main className="flex-1 overflow-y-auto p-3 sm:p-4 md:p-6">
+        <Header onMenuClick={toggleSidebar} showMenuButton={!isDesktop} />
+        <main className="flex-1 overflow-y-auto p-2 sm:p-3 md:p-4 lg:p-5 xl:p-6">
           {children}
         </main>
       </div>

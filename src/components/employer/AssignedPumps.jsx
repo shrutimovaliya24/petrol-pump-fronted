@@ -39,35 +39,35 @@ const AssignedPumps = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="text-gray-500">Loading...</div>
+      <div className="flex items-center justify-center h-48 sm:h-64">
+        <div className="text-body text-gray-500">Loading...</div>
       </div>
     )
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-2 sm:space-y-3 md:space-y-4 lg:space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Assigned Pumps</h1>
-        <p className="text-gray-600 mt-1">View details of pumps assigned to you</p>
+        <h1 className="text-display">Assigned Pumps</h1>
+        <p className="text-caption mt-1">View details of pumps assigned to you</p>
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-lg shadow-md p-4 flex flex-col sm:flex-row gap-4">
+      <div className="card p-3 sm:p-4 flex flex-col sm:flex-row gap-2 sm:gap-3 md:gap-4">
         <div className="flex-1">
           <input
             type="text"
             placeholder="Search by pump name..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 text-xs sm:text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
           />
         </div>
-        <div className="sm:w-48">
+        <div className="sm:w-40 md:w-48">
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 text-xs sm:text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
           >
             <option value="ALL">All Status</option>
             <option value="ACTIVE">Active</option>
@@ -79,13 +79,13 @@ const AssignedPumps = () => {
 
       {/* Pumps List */}
       {filteredPumps.length === 0 ? (
-        <div className="bg-white rounded-xl shadow-md p-12 text-center">
+        <div className="card p-6 sm:p-8 md:p-12 text-center">
           <div className="flex flex-col items-center">
-            <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
-              <span className="text-4xl">⛽</span>
+            <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gray-100 rounded-lg flex items-center justify-center mb-3 sm:mb-4">
+              <span className="text-2xl sm:text-3xl md:text-4xl">⛽</span>
             </div>
-            <p className="text-gray-500 text-lg font-medium">No pumps found</p>
-            <p className="text-gray-400 text-sm mt-2">
+            <p className="text-body font-medium text-gray-500">No pumps found</p>
+            <p className="text-caption mt-2 text-gray-400">
               {searchTerm || filterStatus !== 'ALL'
                 ? 'Try adjusting your filters'
                 : 'No pumps have been assigned to you yet'}
@@ -93,24 +93,24 @@ const AssignedPumps = () => {
           </div>
         </div>
       ) : (
-        <div className="bg-white rounded-xl shadow-md overflow-hidden">
+        <div className="card overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="table-modern w-full">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">
                     Pump Name
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">
                     Fuel Types
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">
                     Assigned Date
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">
                     Assigned By
                   </th>
                 </tr>
@@ -118,24 +118,24 @@ const AssignedPumps = () => {
               <tbody className="bg-white divide-y divide-gray-200">
                 {filteredPumps.map((pump) => (
                   <tr key={pump._id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-sm font-medium text-gray-900">{pump.name}</span>
+                    <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                      <span className="text-body font-medium">{pump.name}</span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex gap-2 flex-wrap">
+                    <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4">
+                      <div className="flex gap-1 sm:gap-2 flex-wrap">
                         {pump.fuelTypes?.map((type, idx) => (
                           <span
                             key={idx}
-                            className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800"
+                            className="px-1.5 sm:px-2 py-0.5 sm:py-1 text-caption font-semibold rounded-full bg-blue-100 text-blue-800"
                           >
                             {type}
                           </span>
                         ))}
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
                       <span
-                        className={`px-2 py-1 text-xs font-semibold rounded-full ${
+                        className={`px-2 py-1 text-caption font-semibold rounded-full ${
                           pump.status === 'ACTIVE'
                             ? 'bg-green-100 text-green-800'
                             : pump.status === 'MAINTENANCE'
@@ -146,8 +146,8 @@ const AssignedPumps = () => {
                         {pump.status}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-sm text-gray-600">
+                    <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                      <span className="text-body">
                         {pump.assignedAt
                           ? new Date(pump.assignedAt).toLocaleDateString('en-US', {
                               year: 'numeric',
@@ -157,8 +157,8 @@ const AssignedPumps = () => {
                           : 'N/A'}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-sm text-gray-600">
+                    <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                      <span className="text-body">
                         {pump.assignedBy?.email || 'N/A'}
                       </span>
                     </td>

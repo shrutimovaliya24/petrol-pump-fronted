@@ -318,23 +318,23 @@ const GiftManagement = () => {
   }
 
   return (
-    <div className="space-y-4 sm:space-y-6">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <div className="space-y-2 sm:space-y-3 md:space-y-4 lg:space-y-6">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3 md:gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Gift Management</h1>
-          <p className="text-sm sm:text-base text-gray-600 mt-1">View available gifts and assign them to employers or users. Approve/reject redemption requests.</p>
+          <h1 className="text-display">Gift Management</h1>
+          <p className="text-caption mt-1">View available gifts and assign them to employers or users. Approve/reject redemption requests.</p>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="bg-white rounded-xl shadow-md">
+      <div className="card">
         <div className="border-b border-gray-200">
           <nav className="flex -mb-px">
             <button
               onClick={() => setActiveTab('gifts')}
-              className={`px-6 py-4 text-sm font-medium border-b-2 ${
+              className={`px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 text-caption sm:text-body font-medium border-b-2 ${
                 activeTab === 'gifts'
-                  ? 'border-blue-500 text-blue-600'
+                  ? 'border-primary-500 text-primary-600'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               }`}
             >
@@ -342,9 +342,9 @@ const GiftManagement = () => {
             </button>
             <button
               onClick={() => setActiveTab('redemptions')}
-              className={`px-6 py-4 text-sm font-medium border-b-2 ${
+              className={`px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 text-caption sm:text-body font-medium border-b-2 ${
                 activeTab === 'redemptions'
-                  ? 'border-blue-500 text-blue-600'
+                  ? 'border-primary-500 text-primary-600'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               }`}
             >
@@ -359,55 +359,55 @@ const GiftManagement = () => {
         <>
 
       {loading ? (
-        <div className="text-center py-12">Loading...</div>
+        <div className="text-center py-6 sm:py-8 md:py-12 text-body">Loading...</div>
       ) : gifts.length === 0 ? (
-        <div className="bg-white rounded-xl shadow-md p-12 text-center">
-          <p className="text-gray-500 text-lg">No gifts found. Add your first gift to get started.</p>
+        <div className="card p-6 sm:p-8 md:p-12 text-center">
+          <p className="text-body font-medium text-gray-500">No gifts found. Add your first gift to get started.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3 md:gap-4 lg:gap-6">
           {gifts.map((gift) => (
-            <div key={gift._id} className="bg-white rounded-xl shadow-md p-6 relative">
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center">
-                    <span className="text-2xl">🎁</span>
+            <div key={gift._id} className="card p-3 sm:p-4 md:p-5 lg:p-6 relative">
+              <div className="flex items-start justify-between mb-2 sm:mb-3 md:mb-4">
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-pink-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <span className="text-lg sm:text-xl md:text-2xl">🎁</span>
                   </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900">{gift.name}</h3>
-                    <p className="text-sm text-gray-500 mt-1">{gift.category}</p>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-subheading truncate">{gift.name}</h3>
+                    <p className="text-caption mt-0.5 sm:mt-1">{gift.category}</p>
                   </div>
                 </div>
-                <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                <span className={`px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-caption font-semibold flex-shrink-0 ${
                   gift.active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
                 }`}>
                   {gift.active ? 'ACTIVE' : 'INACTIVE'}
                 </span>
               </div>
-              <div className="space-y-2 mb-4">
-                <div className="flex justify-between text-sm">
+              <div className="space-y-1 sm:space-y-2 mb-2 sm:mb-3 md:mb-4">
+                <div className="flex justify-between text-body">
                   <span className="text-gray-600">Points:</span>
                   <span className="font-semibold">{gift.pointsRequired}</span>
                 </div>
-                <div className="flex justify-between text-sm">
+                <div className="flex justify-between text-body">
                   <span className="text-gray-600">Value:</span>
                   <span className="font-semibold">₹{gift.value}</span>
                 </div>
-                <div className="flex justify-between text-sm">
+                <div className="flex justify-between text-body">
                   <span className="text-gray-600">Stock:</span>
                   <span className="font-semibold">{gift.stock}</span>
                 </div>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-1.5 sm:gap-2">
                 <button
                   onClick={() => handleView(gift)}
-                  className="flex-1 bg-purple-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-purple-700 transition-all"
+                  className="flex-1 btn-primary bg-purple-600 hover:bg-purple-700 text-xs sm:text-sm"
                 >
                   View Details
                 </button>
                 <button
                   onClick={() => handleAssignClick(gift)}
-                  className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-all"
+                  className="flex-1 btn-primary text-xs sm:text-sm"
                 >
                   Assign
                 </button>
@@ -569,17 +569,17 @@ const GiftManagement = () => {
       {activeTab === 'redemptions' && (
         <>
           {/* Filters */}
-          <div className="bg-white rounded-xl shadow-md p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-bold text-gray-900">Filters</h2>
+          <div className="card p-3 sm:p-4 md:p-5 lg:p-6">
+            <div className="flex items-center justify-between mb-3 sm:mb-4">
+              <h2 className="text-heading">Filters</h2>
               <button
                 onClick={() => setRedemptionFilters({ userId: '', status: '', dateFrom: '', dateTo: '' })}
-                className="text-sm text-blue-600 hover:text-blue-800 font-medium"
+                className="text-body text-primary-600 hover:text-primary-800 font-medium"
               >
                 Clear All
               </button>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
               <div>
                 <label className="block text-xs font-semibold text-gray-700 mb-1">User</label>
                 <select
@@ -630,52 +630,52 @@ const GiftManagement = () => {
           </div>
 
           {/* Summary Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-white rounded-xl shadow-md p-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3 md:gap-4 lg:gap-6">
+            <div className="stat-card">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gray-600 text-sm font-medium mb-1">Total Redemptions</p>
-                  <p className="text-3xl font-bold text-blue-600">{redemptions.length}</p>
+                  <p className="text-caption mb-1">Total Redemptions</p>
+                  <p className="text-xl sm:text-2xl md:text-3xl font-bold text-blue-600">{redemptions.length}</p>
                 </div>
-                <div className="bg-blue-100 p-3 rounded-lg">
-                  <span className="text-2xl">📋</span>
+                <div className="bg-blue-100 p-2 sm:p-3 rounded-lg">
+                  <span className="text-lg sm:text-xl md:text-2xl">📋</span>
                 </div>
               </div>
             </div>
-            <div className="bg-white rounded-xl shadow-md p-6">
+            <div className="stat-card">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gray-600 text-sm font-medium mb-1">Approved</p>
-                  <p className="text-3xl font-bold text-green-600">
+                  <p className="text-caption mb-1">Approved</p>
+                  <p className="text-xl sm:text-2xl md:text-3xl font-bold text-green-600">
                     {redemptions.filter(r => r.status === 'Approved').length}
                   </p>
                 </div>
-                <div className="bg-green-100 p-3 rounded-lg">
-                  <span className="text-2xl">✓</span>
+                <div className="bg-green-100 p-2 sm:p-3 rounded-lg">
+                  <span className="text-lg sm:text-xl md:text-2xl">✓</span>
                 </div>
               </div>
             </div>
-            <div className="bg-white rounded-xl shadow-md p-6">
+            <div className="stat-card">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-gray-600 text-sm font-medium mb-1">Pending</p>
-                  <p className="text-3xl font-bold text-yellow-600">
+                  <p className="text-caption mb-1">Pending</p>
+                  <p className="text-xl sm:text-2xl md:text-3xl font-bold text-yellow-600">
                     {redemptions.filter(r => r.status === 'Pending').length}
                   </p>
                 </div>
-                <div className="bg-yellow-100 p-3 rounded-lg">
-                  <span className="text-2xl">⏰</span>
+                <div className="bg-yellow-100 p-2 sm:p-3 rounded-lg">
+                  <span className="text-lg sm:text-xl md:text-2xl">⏰</span>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Redemption Requests Table */}
-          <div className="bg-white rounded-xl shadow-md overflow-hidden">
-            <div className="p-6 border-b border-gray-200 flex items-center justify-between">
+          <div className="card overflow-hidden">
+            <div className="p-3 sm:p-4 md:p-5 lg:p-6 border-b border-gray-200 flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-bold text-gray-900">Redemption Requests</h2>
-                <p className="text-gray-600 text-sm mt-1">Manage and approve user redemption requests</p>
+                <h2 className="text-heading">Redemption Requests</h2>
+                <p className="text-caption mt-1">Manage and approve user redemption requests</p>
               </div>
             </div>
             {loading ? (
@@ -703,43 +703,43 @@ const GiftManagement = () => {
               </div>
             ) : (
               <div className="overflow-x-auto">
-                <table className="w-full">
+                <table className="table-modern w-full">
                   <thead className="bg-gray-50">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Gift</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Points Used</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User Reward Points</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Request Date</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                      <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">User</th>
+                      <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">Gift</th>
+                      <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">Points Used</th>
+                      <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">User Reward Points</th>
+                      <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">Request Date</th>
+                      <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">Status</th>
+                      <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">Actions</th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
                     {redemptions.map((redemption) => (
                       <tr key={redemption._id} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="text-sm font-medium text-gray-900">
+                        <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                          <span className="text-body font-medium">
                             {redemption.userId?.email || redemption.userEmail || 'N/A'}
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="text-sm font-medium text-gray-900">
+                        <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                          <span className="text-body font-medium">
                             {redemption.giftId?.name || redemption.giftName || 'N/A'}
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="text-sm font-semibold text-gray-900">
+                        <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                          <span className="text-body font-semibold">
                             {redemption.pointsUsed || 0} pts
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="text-sm text-gray-900">
+                        <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                          <span className="text-body">
                             {redemption.userRewardPoints || redemption.userId?.rewardPoints || redemption.userId?.points || 0} pts
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="text-sm text-gray-600">
+                        <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                          <span className="text-body text-gray-600">
                             {redemption.createdAt
                               ? new Date(redemption.createdAt).toLocaleDateString('en-US', {
                                   year: 'numeric',
@@ -751,9 +751,9 @@ const GiftManagement = () => {
                               : 'N/A'}
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
+                        <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
                           <span
-                            className={`px-2 py-1 text-xs font-semibold rounded-full ${
+                            className={`px-2 py-1 text-caption font-semibold rounded-full ${
                               redemption.status === 'Approved'
                                 ? 'bg-green-100 text-green-800'
                                 : redemption.status === 'Pending'
@@ -764,18 +764,18 @@ const GiftManagement = () => {
                             {redemption.status || 'Pending'}
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap text-body font-medium">
                           {redemption.status === 'Pending' && (
-                            <div className="flex gap-2">
+                            <div className="flex gap-1 sm:gap-2">
                               <button
                                 onClick={() => handleRedemptionAction(redemption._id, 'Approved')}
-                                className="text-green-600 hover:text-green-900 font-medium"
+                                className="text-green-600 hover:text-green-900 font-medium text-xs sm:text-sm"
                               >
                                 Approve
                               </button>
                               <button
                                 onClick={() => handleRedemptionAction(redemption._id, 'Rejected')}
-                                className="text-red-600 hover:text-red-900 font-medium"
+                                className="text-red-600 hover:text-red-900 font-medium text-xs sm:text-sm"
                               >
                                 Reject
                               </button>

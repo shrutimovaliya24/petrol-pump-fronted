@@ -31,6 +31,9 @@ const UserManagement = () => {
   const [showAssignUserModal, setShowAssignUserModal] = useState(false)
   const [selectedUserForAssignment, setSelectedUserForAssignment] = useState(null)
   const [userAssignments, setUserAssignments] = useState({}) // Map of userId to employer assignments
+  const [showQRModal, setShowQRModal] = useState(false)
+  const [qrCodeUrl, setQrCodeUrl] = useState('')
+  const [qrUser, setQrUser] = useState(null)
 
   useEffect(() => {
     if (currentUser?.id) {
@@ -390,6 +393,32 @@ const UserManagement = () => {
     }
   }
 
+  const generateQRCode = (user) => {
+    try {
+      // Only generate QR for users (not employers)
+      if (user.role !== 'user') {
+        alert('QR code is only available for regular users')
+        return
+      }
+      
+      // Create URL to mobile invoice download page with user ID
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 
+                     (typeof window !== 'undefined' ? window.location.origin : '')
+      const invoiceDownloadUrl = `${baseUrl}/invoice/download?userId=${user._id || user.id}`
+
+      // Generate QR code using API with URL data
+      const encodedData = encodeURIComponent(invoiceDownloadUrl)
+      const qrCodeApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodedData}`
+      
+      setQrUser(user)
+      setQrCodeUrl(qrCodeApiUrl)
+      setShowQRModal(true)
+    } catch (error) {
+      console.error('Error generating QR code:', error)
+      alert('Error generating QR code')
+    }
+  }
+
   const handleViewUser = async (user) => {
     setViewingUser(user)
     if (user.role === 'user') {
@@ -472,22 +501,23 @@ const UserManagement = () => {
                 setActiveTab('employers')
                 setCurrentPage(1)
               }}
-              className={`px-6 py-4 text-sm font-medium border-b-2 ${
+              className={`px-3 py-2 sm:px-4 sm:py-3 md:px-6 md:py-4 text-caption sm:text-body font-medium border-b-2 ${
                 activeTab === 'employers'
-                  ? 'border-blue-500 text-blue-600'
+                  ? 'border-primary-500 text-primary-600'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               }`}
             >
-              Registered Employers ({employers.length})
+              <span className="hidden sm:inline">Registered Employers</span>
+              <span className="sm:hidden">Employers</span> ({employers.length})
             </button>
             <button
               onClick={() => {
                 setActiveTab('users')
                 setCurrentPage(1)
               }}
-              className={`px-6 py-4 text-sm font-medium border-b-2 ${
+              className={`px-3 py-2 sm:px-4 sm:py-3 md:px-6 md:py-4 text-caption sm:text-body font-medium border-b-2 ${
                 activeTab === 'users'
-                  ? 'border-blue-500 text-blue-600'
+                  ? 'border-primary-500 text-primary-600'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               }`}
             >
@@ -500,73 +530,73 @@ const UserManagement = () => {
       {/* Employers Tab */}
       {activeTab === 'employers' && (
         <div className="bg-white rounded-xl shadow-md overflow-hidden">
-          <div className="p-6 border-b border-gray-200">
-            <h2 className="text-xl font-bold text-gray-900">Registered Employers</h2>
-            <p className="text-gray-600 text-sm mt-1">View employers and assign them to pumps</p>
+          <div className="p-3 sm:p-4 md:p-5 lg:p-6 border-b border-gray-200">
+            <h2 className="text-heading">Registered Employers</h2>
+            <p className="text-caption mt-1">View employers and assign them to pumps</p>
           </div>
           {loading ? (
-            <div className="text-center py-12">Loading...</div>
+            <div className="text-center py-6 sm:py-8 md:py-12 text-body">Loading...</div>
           ) : employers.length === 0 ? (
-            <div className="p-12 text-center text-gray-500">No employers found. Register your first employer.</div>
+            <div className="p-6 sm:p-8 md:p-12 text-center text-body text-gray-500">No employers found. Register your first employer.</div>
           ) : (
             <>
               <div className="overflow-x-auto">
-                <table className="w-full">
+                <table className="table-modern w-full">
                   <thead className="bg-gray-50">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Assigned Pumps</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                      <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">Email</th>
+                      <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">Assigned Pumps</th>
+                      <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">Status</th>
+                      <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">Actions</th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
                     {currentEmployers.map((employer) => (
                       <tr key={employer._id} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="text-sm font-medium text-gray-900">{employer.email}</span>
+                        <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                          <span className="text-body font-medium">{employer.email}</span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="flex items-center gap-2">
-                            <span className="text-xl">⛽</span>
-                            <span className="text-sm text-gray-900">
+                        <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4">
+                          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-2">
+                            <span className="text-lg sm:text-xl">⛽</span>
+                            <span className="text-body">
                               {getAssignedPumps(employer._id).length} pump(s)
                             </span>
                             {getAssignedPumps(employer._id).length > 0 && (
-                              <div className="text-xs text-gray-500">
+                              <div className="text-caption text-gray-500">
                                 ({getAssignedPumps(employer._id).map(a => a.pumpId?.name).join(', ')})
                               </div>
                             )}
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className={`px-2 py-1 text-xs font-semibold rounded-full ${
+                        <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                          <span className={`px-2 py-1 text-caption font-semibold rounded-full ${
                             employer.active !== false ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
                           }`}>
                             {employer.active !== false ? 'Active' : 'Inactive'}
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                          <div className="flex gap-2">
+                        <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap text-body font-medium">
+                          <div className="flex flex-wrap gap-1 sm:gap-2">
                             <button
                               onClick={() => {
                                 setSelectedEmployer(employer)
                                 setAssignmentData({ pumpId: '' })
                                 setShowAssignModal(true)
                               }}
-                              className="text-purple-600 hover:text-purple-900"
+                              className="text-purple-600 hover:text-purple-900 text-xs sm:text-sm"
                             >
                               Assign Pump
                             </button>
                             <button
                               onClick={() => handleEdit(employer)}
-                              className="text-blue-600 hover:text-blue-900"
+                              className="text-blue-600 hover:text-blue-900 text-xs sm:text-sm"
                             >
                               Edit
                             </button>
                             <button
                               onClick={() => handleDelete(employer._id)}
-                              className="text-red-600 hover:text-red-900"
+                              className="text-red-600 hover:text-red-900 text-xs sm:text-sm"
                             >
                               Delete
                             </button>
@@ -623,75 +653,84 @@ const UserManagement = () => {
 
       {/* Users Tab */}
       {activeTab === 'users' && (
-        <div className="bg-white rounded-xl shadow-md overflow-hidden">
-          <div className="p-6 border-b border-gray-200">
-            <h2 className="text-xl font-bold text-gray-900">Registered Users</h2>
-            <p className="text-gray-600 text-sm mt-1">View all registered users under supervised pumps, check reward points and transactions</p>
+        <div className="card overflow-hidden">
+          <div className="p-3 sm:p-4 md:p-5 lg:p-6 border-b border-gray-200">
+            <h2 className="text-heading">Registered Users</h2>
+            <p className="text-caption mt-1">View all registered users under supervised pumps, check reward points and transactions</p>
           </div>
           {loading ? (
-            <div className="text-center py-12">Loading...</div>
+            <div className="text-center py-6 sm:py-8 md:py-12 text-body">Loading...</div>
           ) : users.length === 0 ? (
-            <div className="p-12 text-center text-gray-500">No users found. Register your first user.</div>
+            <div className="p-6 sm:p-8 md:p-12 text-center text-body text-gray-500">No users found. Register your first user.</div>
           ) : (
             <>
               <div className="overflow-x-auto">
-                <table className="w-full">
+                <table className="table-modern w-full">
                   <thead className="bg-gray-50">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reward Points</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Transactions</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Assigned Employer</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                      <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">Email</th>
+                      <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">Reward Points</th>
+                      <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">Transactions</th>
+                      <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">Assigned Employer</th>
+                      <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">Status</th>
+                      <th className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-left text-label">Actions</th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
                     {currentUsers.map((user) => (
                       <tr key={user._id} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="text-sm font-medium text-gray-900">{user.email}</span>
+                        <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                          <span className="text-body font-medium">{user.email}</span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="text-sm font-semibold text-gray-900">
+                        <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                          <span className="text-body font-semibold">
                             {user.rewardPoints || user.points || 0} pts
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="text-sm text-gray-900">
+                        <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                          <span className="text-body">
                             {user.transactionCount || 'N/A'}
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="text-sm text-gray-900">
+                        <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                          <span className="text-body">
                             {getAssignedEmployer(user._id)}
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className={`px-2 py-1 text-xs font-semibold rounded-full ${
+                        <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap">
+                          <span className={`px-2 py-1 text-caption font-semibold rounded-full ${
                             user.active !== false ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
                           }`}>
                             {user.active !== false ? 'Active' : 'Inactive'}
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                          <div className="flex gap-2">
+                        <td className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 whitespace-nowrap text-body font-medium">
+                          <div className="flex flex-wrap gap-1 sm:gap-2">
+                            <button
+                              onClick={() => generateQRCode(user)}
+                              className="text-green-600 hover:text-green-900 p-1"
+                              title="Generate QR Code"
+                            >
+                              <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                              </svg>
+                            </button>
                             <button
                               onClick={() => handleAssignUserToEmployer(user)}
-                              className="text-purple-600 hover:text-purple-900"
+                              className="text-purple-600 hover:text-purple-900 text-xs sm:text-sm"
                               title="Assign Employer"
                             >
                               Assign Employer
                             </button>
                             <button
                               onClick={() => handleEdit(user)}
-                              className="text-green-600 hover:text-green-900"
+                              className="text-green-600 hover:text-green-900 text-xs sm:text-sm"
                             >
                               Edit
                             </button>
                             <button
                               onClick={() => handleDelete(user._id)}
-                              className="text-red-600 hover:text-red-900"
+                              className="text-red-600 hover:text-red-900 text-xs sm:text-sm"
                             >
                               Delete
                             </button>
@@ -703,39 +742,39 @@ const UserManagement = () => {
                 </table>
               </div>
               {/* Pagination */}
-              <div className="bg-gray-50 px-6 py-3 flex items-center justify-between border-t border-gray-200">
-                <div className="text-sm text-gray-700">
+              <div className="bg-gray-50 px-3 sm:px-4 md:px-6 py-2 sm:py-3 flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-0 border-t border-gray-200">
+                <div className="text-caption sm:text-body text-gray-700">
                   Showing {startIndex + 1} to {Math.min(endIndex, users.length)} of {users.length} results
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1 sm:gap-2">
                   <button
                     onClick={() => setCurrentPage(1)}
                     disabled={currentPage === 1}
-                    className="px-2 py-1 text-sm border border-gray-300 rounded disabled:opacity-50"
+                    className="px-1.5 sm:px-2 py-1 text-caption sm:text-body border border-gray-300 rounded disabled:opacity-50"
                   >
                     &lt;&lt;
                   </button>
                   <button
                     onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                     disabled={currentPage === 1}
-                    className="px-2 py-1 text-sm border border-gray-300 rounded disabled:opacity-50"
+                    className="px-1.5 sm:px-2 py-1 text-caption sm:text-body border border-gray-300 rounded disabled:opacity-50"
                   >
                     &lt;
                   </button>
-                  <span className="px-3 py-1 text-sm border border-gray-300 rounded bg-blue-600 text-white">
+                  <span className="px-2 sm:px-3 py-1 text-caption sm:text-body border border-gray-300 rounded bg-primary-600 text-white">
                     {currentPage}
                   </span>
                   <button
                     onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
                     disabled={currentPage === totalPages}
-                    className="px-2 py-1 text-sm border border-gray-300 rounded disabled:opacity-50"
+                    className="px-1.5 sm:px-2 py-1 text-caption sm:text-body border border-gray-300 rounded disabled:opacity-50"
                   >
                     &gt;
                   </button>
                   <button
                     onClick={() => setCurrentPage(totalPages)}
                     disabled={currentPage === totalPages}
-                    className="px-2 py-1 text-sm border border-gray-300 rounded disabled:opacity-50"
+                    className="px-1.5 sm:px-2 py-1 text-caption sm:text-body border border-gray-300 rounded disabled:opacity-50"
                   >
                     &gt;&gt;
                   </button>
@@ -1046,6 +1085,54 @@ const UserManagement = () => {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* QR Code Modal */}
+      {showQRModal && qrUser && qrCodeUrl && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-3 sm:p-4">
+          <div className="bg-white rounded-xl shadow-2xl w-full max-w-xs m-2 sm:m-4">
+            <div className="flex items-center justify-between p-3 sm:p-4 border-b border-gray-200">
+              <h2 className="text-heading">QR Code</h2>
+              <button
+                onClick={() => {
+                  setShowQRModal(false)
+                  setQrUser(null)
+                  setQrCodeUrl('')
+                }}
+                className="text-gray-400 hover:text-gray-600 text-xl sm:text-2xl p-1"
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="p-4 sm:p-6">
+              <div className="text-center mb-3 sm:mb-4">
+                <p className="text-body mb-2">{qrUser.email}</p>
+                <p className="text-caption">Reward Points: {qrUser.rewardPoints || qrUser.points || 0} pts | Tier: {qrUser.tier || 'Bronze'}</p>
+              </div>
+              <div className="text-center">
+                <div className="flex justify-center mb-3 sm:mb-4">
+                  <img 
+                    src={qrCodeUrl} 
+                    alt="User QR Code" 
+                    className="w-40 h-40 sm:w-48 sm:h-48 border border-gray-200 rounded" 
+                  />
+                </div>
+                <p className="text-caption text-gray-600 mb-3 sm:mb-4">Scan this QR code to access user invoice download</p>
+                <button
+                  onClick={() => {
+                    setShowQRModal(false)
+                    setQrUser(null)
+                    setQrCodeUrl('')
+                  }}
+                  className="btn-secondary w-full"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
